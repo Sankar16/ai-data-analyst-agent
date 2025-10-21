@@ -1,6 +1,6 @@
 {
     "file_name": "sample.csv",
-    "num_rows": 4,
+    "num_rows": 5,
     "num_cols": 3,
     "total_memory_mb": 0.0,
     "columns": {
@@ -12,13 +12,13 @@
         },
         "age": {
             "dtype": "float64",
-            "missing_pct": 25.0,
-            "unique_values": 3,
+            "missing_pct": 20.0,
+            "unique_values": 4,
             "memory_mb": 0.0
         },
         "Salary": {
             "dtype": "float64",
-            "missing_pct": 25.0,
+            "missing_pct": 20.0,
             "unique_values": 3,
             "memory_mb": 0.0
         }

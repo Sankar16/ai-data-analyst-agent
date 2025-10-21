@@ -1,5 +1,6 @@
 name,age,Salary
 Alice,25,50000
-Bob,30,70000
-Charlie,,
+Bob,,70000
+Charlie,26,
 David,35,80000
+Bob,30,50000

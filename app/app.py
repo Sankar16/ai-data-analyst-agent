@@ -16,6 +16,8 @@ from agent.tools.metadata_tool import (
     load_metadata,
     compare_metadata,
 )
+from agent.tools.visual_tool import plot_numeric_distribution, plot_categorical_distribution
+from agent.tools.insight_tool import generate_data_insights
 
 # ───────────────────────────────────────────────
 # Streamlit page setup
@@ -73,3 +75,17 @@ if uploaded is not None:
 
     st.write("### 🧩 Missing Values")
     st.write(missing_values(df))
+
+        # ───────────────────────────────────────────────
+    # 6️⃣ Visual Profiling
+    # ───────────────────────────────────────────────
+    st.write("---")
+    st.header("📊 Visual Profiling")
+    plot_numeric_distribution(df)
+    plot_categorical_distribution(df)
+
+    # ───────────────────────────────────────────────
+    # 7️⃣ Automated Insights
+    # ───────────────────────────────────────────────
+    st.write("---")
+    generate_data_insights(df)
