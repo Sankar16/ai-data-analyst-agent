@@ -7,9 +7,10 @@ import streamlit as st
 import pandas as pd
 from agent.tools.data_loader import load_csv
 from agent.tools.eda_tool import basic_stats, missing_values, memory_usage
+from agent.tools.metadata_tool import generate_metadata, save_metadata
 
 st.set_page_config(page_title="AI Data Analyst Agent", layout="wide")
-st.title("🔎 AI Data Analyst Agent — M0")
+st.title("🔎 AI Data Analyst Agent — M1")
 
 
 uploaded = st.file_uploader("Upload a CSV file", type=["csv"])
@@ -19,6 +20,12 @@ if uploaded is not None:
 
     st.subheader("Preview")
     st.dataframe(df.head(20))
+
+    meta = generate_metadata(df, uploaded.name)
+    save_metadata(meta)
+
+    st.subheader("📘 Dataset Metadata")
+    st.json(meta.model_dump())
 
     st.subheader("Schema & Basics")
     st.json({
