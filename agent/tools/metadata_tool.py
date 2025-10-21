@@ -52,3 +52,43 @@ def load_metadata(path: str = "data/metadata.json") -> DatasetMetadata | None:
     with open(path, "r") as f:
         data = json.load(f)
     return DatasetMetadata(**data)
+
+def compare_metadata(old: DatasetMetadata, new: DatasetMetadata) -> Dict[str, Dict[str, str]]:
+    """Compare old and new metadata to detect schema drift."""
+    drift_report = {}
+
+    # Check for added or removed columns
+    old_cols = set(old.columns.keys())
+    new_cols = set(new.columns.keys())
+
+    added = new_cols - old_cols
+    removed = old_cols - new_cols
+
+    if added:
+        drift_report["added_columns"] = list(added)
+    if removed:
+        drift_report["removed_columns"] = list(removed)
+
+    # Compare column-wise changes
+    changed_cols = {}
+    for col in old_cols & new_cols:
+        old_col = old.columns[col]
+        new_col = new.columns[col]
+        changes = {}
+
+        if old_col.dtype != new_col.dtype:
+            changes["dtype_changed"] = f"{old_col.dtype} → {new_col.dtype}"
+
+        if abs(old_col.missing_pct - new_col.missing_pct) > 5:
+            changes["missing_pct_changed"] = f"{old_col.missing_pct}% → {new_col.missing_pct}%"
+
+        if abs(old_col.unique_values - new_col.unique_values) > (0.1 * old_col.unique_values):
+            changes["unique_values_changed"] = f"{old_col.unique_values} → {new_col.unique_values}"
+
+        if changes:
+            changed_cols[col] = changes
+
+    if changed_cols:
+        drift_report["changed_columns"] = changed_cols
+
+    return drift_report

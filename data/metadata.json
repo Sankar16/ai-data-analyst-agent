@@ -16,7 +16,7 @@
             "unique_values": 3,
             "memory_mb": 0.0
         },
-        "income": {
+        "Salary": {
             "dtype": "float64",
             "missing_pct": 25.0,
             "unique_values": 3,
