@@ -18,6 +18,7 @@ from agent.tools.metadata_tool import (
 )
 from agent.tools.visual_tool import plot_numeric_distribution, plot_categorical_distribution
 from agent.tools.insight_tool import generate_data_insights
+from agent.tools.ai_insight_tool import generate_ai_insights
 
 # ───────────────────────────────────────────────
 # Streamlit page setup
@@ -89,3 +90,15 @@ if uploaded is not None:
     # ───────────────────────────────────────────────
     st.write("---")
     generate_data_insights(df)
+
+    # ───────────────────────────────────────────────
+    # 8️⃣ AI-Powered Insight Generation
+    # ───────────────────────────────────────────────
+    st.write("---")
+    st.header("🤖 AI-Generated Analytical Summary")
+
+    with st.spinner("Generating AI insights..."):
+        ai_insights = generate_ai_insights(df, new_metadata.model_dump())
+
+    st.success("✅ AI insights generated!")
+    st.write(ai_insights)
